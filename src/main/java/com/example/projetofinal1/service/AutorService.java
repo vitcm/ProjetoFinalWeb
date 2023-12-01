@@ -1,12 +1,14 @@
 package com.example.projetofinal1.service;
 
 import com.example.projetofinal1.model.Autor;
+import com.example.projetofinal1.model.AutorDTO;
 import com.example.projetofinal1.repository.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AutorService {
@@ -31,5 +33,15 @@ public class AutorService {
 
     public void excluirAutor(Long id) {
         autorRepository.deleteById(id);
+    }
+
+    public AutorDTO convertToDTO(Autor autor) {
+        return new AutorDTO(autor);
+    }
+
+    public List<AutorDTO> convertToDTOList(List<Autor> autores) {
+        return autores.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 }
